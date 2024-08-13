@@ -3,15 +3,15 @@ const { where, Op } = require("sequelize");
 const sequelize = require("../db/config/sequelize.config");
 const { Student } = require("../db/models/associations");
 
-router.route("/getStudent").get(async (req, res) => {
+router.route("/add").post(async (req, res) => {
   try {
-    const data = await Student.findAll();
+    const { name, rfid } = req.body;
+    const data = await Student.create({
+      name: name,
+      rfid: rfid,
+    });
 
-    if (data) {
-      return res.json(data);
-    } else {
-      res.status(400);
-    }
+    res.status(200).send({});
   } catch (err) {
     console.error(err);
     res.status(500).json("Error");
