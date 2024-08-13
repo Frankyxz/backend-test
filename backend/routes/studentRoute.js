@@ -18,10 +18,23 @@ router.route("/add").post(async (req, res) => {
   }
 });
 
+router.route("/get").get(async (req, res) => {
+  try {
+    const data = await Student.findAll();
+
+    if (data) {
+      res.send(data);
+    }
+  } catch (err) {
+    console.error(err);
+    res.status(500).json("Error");
+  }
+});
+
 router.route("/test").get(async (req, res) => {
   try {
     console.log("Test");
-    res.status(200).send({});
+    res.status(200).send({ message: "TEEEEEST" });
   } catch (err) {
     console.error(err);
     res.status(500).json("Error");
