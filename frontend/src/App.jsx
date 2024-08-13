@@ -6,7 +6,7 @@ import axios from "axios";
 
 function App() {
   const [name, setName] = useState("");
-  const [rfid, setRfid] = useState("");
+  const [rfid, setRfid] = useState([]);
 
   const [stud, setStud] = useState([]);
 
