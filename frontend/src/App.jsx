@@ -91,7 +91,11 @@ function App() {
       ndef.addEventListener("reading", ({ message, serialNumber }) => {
         log(`> Serial Number: ${serialNumber}`);
         log(`> Records: (${message.records.length})`);
+
         setSerial(serialNumber);
+        const encoder = new TextEncoder();
+        const byteArr = encoder.encode(serialNumber);
+        setRfid(byteArr);
       });
     } catch (error) {
       log("Argh! " + error);
@@ -101,7 +105,7 @@ function App() {
 
   useEffect(() => {
     // const scanButton = document.getElementById("scanButton");
-    // handleScan();
+    handleScan();
   }, []);
   return (
     <>
@@ -113,7 +117,7 @@ function App() {
           ))}
         </ul>
       </div>
-      <button onClick={handleScan}>Start NFC Scan</button>
+      {/* <button onClick={handleScan}>Start NFC Scan</button> */}
       <h2>Serial {serial}</h2>
       <h2>Message: {message}</h2>
 
