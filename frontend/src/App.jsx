@@ -14,7 +14,7 @@ function App() {
   const BASE = "https://backend-test-rbm7.onrender.com";
 
   const handleFetch = async () => {
-    const res = await axios.get(`${BASE}/stud/add`);
+    const res = await axios.get(`${BASE}/stud/get`);
 
     setStud(res.data);
   };
