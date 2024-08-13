@@ -71,59 +71,45 @@ function App() {
   // }, []);
 
   useEffect(() => {
-    const readNfc = async () => {
+    // const scanButton = document.getElementById("scanButton");
+
+    const log = (message) => {
+      setLogs((prevLogs) => [...prevLogs, message]);
+    };
+
+    const handleScan = async () => {
+      //   log("User clicked scan button");
+
       try {
-        console.log("running");
-        if ("NDEFReader" in window) {
-          const ndef = new window.NDEFReader();
-          await ndef.scan();
+        const ndef = new NDEFReader();
+        await ndef.scan();
+        log("> Scan started");
 
-          ndef.onreading = (event) => {
-            onReading(event);
-            setSerial(event.serialNumber);
-            // const decoder = new TextDecoder();
-            // for (const record of event.message.records) {
-            //   setMessage(decoder.decode(record.data));
-            // }
-          };
+        ndef.addEventListener("readingerror", () => {
+          log("Argh! Cannot read data from the NFC tag. Try another one?");
+        });
 
-          console.log("NFC reader initialized.");
-          setInit("NFC");
-        } else {
-          console.log("NFC reader not supported on this device.");
-          setInit("alaws");
-        }
+        ndef.addEventListener("reading", ({ message, serialNumber }) => {
+          setSerial(serialNumber);
+        });
       } catch (error) {
-        console.error(`Error: ${error}`);
-        seteRR(error);
+        console.log(error);
       }
     };
 
-    readNfc();
+    handleScan();
   }, []);
-
-  const onReading = ({ message, serialNumber }) => {
-    const encoder = new TextEncoder();
-    const byteArr = encoder.encode(serialNumber);
-    setRfid(byteArr);
-    setSerial(byteArr);
-    // for (const record of message.records) {
-    //   switch (record.recordType) {
-    //     case "text":
-    //       const textDecoder = new TextDecoder(record.encoding);
-    //       setMessage(textDecoder.decode(record.data));
-    //       break;
-    //     case "url":
-    //       // TODO: Read URL record with record data.
-    //       break;
-    //     default:
-    //     // TODO: Handle other records with record data.
-    //   }
-    // }
-  };
-
   return (
     <>
+      <div>
+        <h3>Logs</h3>
+        <ul>
+          {logs.map((log, index) => (
+            <li key={index}>{log}</li>
+          ))}
+        </ul>
+      </div>
+
       <h2>Serial {serial}</h2>
       <h2>Message: {message}</h2>
 
