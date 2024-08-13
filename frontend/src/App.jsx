@@ -13,6 +13,9 @@ function App() {
   const [serial, setSerial] = useState("");
   const [message, setMessage] = useState("");
 
+  const [init, setInit] = useState("");
+  const [err, seteRR] = useState("");
+
   // const BASE = "http://localhost:8083";
   const BASE = "https://backend-test-rbm7.onrender.com";
 
@@ -85,12 +88,14 @@ function App() {
           };
 
           console.log("NFC reader initialized.");
+          setInit("NFC");
         } else {
           console.log("NFC reader not supported on this device.");
-          setSupported(false);
+          setInit("alaws");
         }
       } catch (error) {
         console.error(`Error: ${error}`);
+        seteRR(error);
       }
     };
 
@@ -121,6 +126,9 @@ function App() {
     <>
       <h2>Serial {serial}</h2>
       <h2>Message: {message}</h2>
+
+      <h2>init {init}</h2>
+      <h2>err: {err}</h2>
       <form onSubmit={handleSubmit}>
         <input
           type="text"
