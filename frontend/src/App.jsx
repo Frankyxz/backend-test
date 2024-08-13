@@ -132,7 +132,7 @@ function App() {
         <input
           type="text"
           value={rfid.join("")}
-          onChange={(e) => setRfid(e.target.value)}
+          // onChange={(e) => setRfid(e.target.value)}
         />
 
         <button type="submit">Add</button>
