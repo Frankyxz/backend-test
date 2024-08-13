@@ -80,21 +80,24 @@ function App() {
     // const scanButton = document.getElementById("scanButton");
 
     const handleScan = async () => {
-      //   log("User clicked scan button");
+      log("User clicked scan button");
 
       try {
         const ndef = new NDEFReader();
         await ndef.scan();
-        // log("> Scan started");
+        log("> Scan started");
 
         ndef.addEventListener("readingerror", () => {
-          // log("Argh! Cannot read data from the NFC tag. Try another one?");
+          log("Argh! Cannot read data from the NFC tag. Try another one?");
         });
 
         ndef.addEventListener("reading", ({ message, serialNumber }) => {
+          log(`> Serial Number: ${serialNumber}`);
+          log(`> Records: (${message.records.length})`);
           setSerial(serialNumber);
         });
       } catch (error) {
+        log("Argh! " + error);
         console.log(error);
       }
     };
@@ -104,12 +107,12 @@ function App() {
   return (
     <>
       <div>
-        {/* <h3>Logs</h3>
+        <h3>Logs</h3>
         <ul>
           {logs.map((log, index) => (
             <li key={index}>{log}</li>
           ))}
-        </ul> */}
+        </ul>
       </div>
 
       <h2>Serial {serial}</h2>
