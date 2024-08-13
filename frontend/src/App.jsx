@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import reactLogo from "./assets/react.svg";
 import viteLogo from "/vite.svg";
 import "./App.css";
@@ -33,6 +33,83 @@ function App() {
     setName("");
     setRfid("");
   };
+
+  // const scan = useCallback(async () => {
+  //   if ("NDEFReader" in window) {
+  //     try {
+  //       const ndef = new window.NDEFReader();
+  //       await ndef.scan();
+
+  //       console.log("Scan started successfully.");
+  //       ndef.onreadingerror = () => {
+  //         console.log("Cannot read data from the NFC tag. Try another one?");
+  //       };
+
+  //       ndef.onreading = (event) => {
+  //         console.log("NDEF message read.");
+  //         onReading(event);
+  //         setActions({
+  //           scan: "scanned",
+  //           write: null,
+  //         });
+  //       };
+  //     } catch (error) {
+  //       console.log(`Error! Scan failed to start: ${error}.`);
+  //     }
+  //   }
+  // }, []);
+
+  // useEffect(() => {
+  //   scan();
+  // }, []);
+
+  useEffect(() => {
+    const readNfc = async () => {
+      try {
+        if ("NDEFReader" in window) {
+          const ndef = new window.NDEFReader();
+          await ndef.scan();
+
+          ndef.onreading = (event) => {
+            onReading(event);
+            const decoder = new TextDecoder();
+            // for (const record of event.message.records) {
+            //   setNfcMessage(decoder.decode(record.data));
+            // }
+          };
+
+          console.log("NFC reader initialized.");
+        } else {
+          console.log("NFC reader not supported on this device.");
+          setSupported(false);
+        }
+      } catch (error) {
+        console.error(`Error: ${error}`);
+      }
+    };
+
+    readNfc();
+  }, []);
+
+  const onReading = ({ message, serialNumber }) => {
+    const encoder = new TextEncoder();
+    const byteArr = encoder.encode(serialNumber);
+    setRfid(byteArr);
+    // for (const record of message.records) {
+    //   switch (record.recordType) {
+    //     case "text":
+    //       const textDecoder = new TextDecoder(record.encoding);
+    //       setRfid(textDecoder.decode(record.data));
+    //       break;
+    //     case "url":
+    //       // TODO: Read URL record with record data.
+    //       break;
+    //     default:
+    //     // TODO: Handle other records with record data.
+    //   }
+    // }
+  };
+
   return (
     <>
       <form onSubmit={handleSubmit}>
@@ -52,8 +129,8 @@ function App() {
 
       {stud.map((s) => (
         <>
-          <h1>Name{s.name}</h1>
-          <h1>RFID{s.rfid}</h1>
+          <h1>Name: {s.name}</h1>
+          <h1>RFID: {s.rfid}</h1>
         </>
       ))}
     </>
