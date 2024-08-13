@@ -18,4 +18,14 @@ router.route("/add").post(async (req, res) => {
   }
 });
 
+router.route("/test").post(async (req, res) => {
+  try {
+    console.log("Test");
+    res.status(200).send({});
+  } catch (err) {
+    console.error(err);
+    res.status(500).json("Error");
+  }
+});
+
 module.exports = router;
