@@ -16,6 +16,8 @@ function App() {
   const [init, setInit] = useState("");
   const [err, seteRR] = useState("");
 
+  const [logs, setLogs] = useState([]);
+
   // const BASE = "http://localhost:8083";
   const BASE = "https://backend-test-rbm7.onrender.com";
 
@@ -70,13 +72,12 @@ function App() {
   //   scan();
   // }, []);
 
-  const [logs, setLogs] = useState([]);
+  const log = (message) => {
+    setLogs((prevLogs) => [...prevLogs, message]);
+  };
+
   useEffect(() => {
     // const scanButton = document.getElementById("scanButton");
-
-    const log = (message) => {
-      setLogs((prevLogs) => [...prevLogs, message]);
-    };
 
     const handleScan = async () => {
       //   log("User clicked scan button");
@@ -84,10 +85,10 @@ function App() {
       try {
         const ndef = new NDEFReader();
         await ndef.scan();
-        log("> Scan started");
+        // log("> Scan started");
 
         ndef.addEventListener("readingerror", () => {
-          log("Argh! Cannot read data from the NFC tag. Try another one?");
+          // log("Argh! Cannot read data from the NFC tag. Try another one?");
         });
 
         ndef.addEventListener("reading", ({ message, serialNumber }) => {
@@ -103,12 +104,12 @@ function App() {
   return (
     <>
       <div>
-        <h3>Logs</h3>
+        {/* <h3>Logs</h3>
         <ul>
           {logs.map((log, index) => (
             <li key={index}>{log}</li>
           ))}
-        </ul>
+        </ul> */}
       </div>
 
       <h2>Serial {serial}</h2>
