@@ -6,7 +6,9 @@ import axios from "axios";
 
 function App() {
   const [name, setName] = useState("");
-  const [rfid, setRfid] = useState([]);
+  const [rfid, setRfid] = useState([
+    50, 52, 24, 62, 12, 51, 52, 88, 20, 52, 49,
+  ]);
 
   const [stud, setStud] = useState([]);
 
@@ -18,12 +20,11 @@ function App() {
 
   const [logs, setLogs] = useState([]);
 
-  // const BASE = "http://localhost:8083";
-  const BASE = "https://backend-test-rbm7.onrender.com";
+  const BASE = "http://localhost:8083";
+  // const BASE = "https://backend-test-rbm7.onrender.com";
 
   const handleFetch = async () => {
     const res = await axios.get(`${BASE}/stud/get`);
-
     setStud(res.data);
   };
 
@@ -33,13 +34,14 @@ function App() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const formatRFID = rfid.join("");
     const res = await axios.post(`${BASE}/stud/add`, {
       name,
-      rfid,
+      rfid: formatRFID,
     });
     handleFetch();
     setName("");
-    setRfid("");
+    setRfid([]);
   };
 
   // const handleSubmit = () => {};
