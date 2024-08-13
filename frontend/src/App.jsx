@@ -20,8 +20,8 @@ function App() {
 
   const [logs, setLogs] = useState([]);
 
-  const BASE = "http://localhost:8083";
-  // const BASE = "https://backend-test-rbm7.onrender.com";
+  // const BASE = "http://localhost:8083";
+  const BASE = "https://backend-test-rbm7.onrender.com";
 
   const handleFetch = async () => {
     const res = await axios.get(`${BASE}/stud/get`);
