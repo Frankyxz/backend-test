@@ -70,6 +70,7 @@ function App() {
   //   scan();
   // }, []);
 
+  const [logs, setLogs] = useState([]);
   useEffect(() => {
     // const scanButton = document.getElementById("scanButton");
 
