@@ -10,6 +10,9 @@ function App() {
 
   const [stud, setStud] = useState([]);
 
+  const [serial, setSerial] = useState("");
+  const [message, setMessage] = useState("");
+
   // const BASE = "http://localhost:8083";
   const BASE = "https://backend-test-rbm7.onrender.com";
 
@@ -95,23 +98,26 @@ function App() {
     const encoder = new TextEncoder();
     const byteArr = encoder.encode(serialNumber);
     setRfid(byteArr);
-    // for (const record of message.records) {
-    //   switch (record.recordType) {
-    //     case "text":
-    //       const textDecoder = new TextDecoder(record.encoding);
-    //       setRfid(textDecoder.decode(record.data));
-    //       break;
-    //     case "url":
-    //       // TODO: Read URL record with record data.
-    //       break;
-    //     default:
-    //     // TODO: Handle other records with record data.
-    //   }
-    // }
+    setSerial(byteArr);
+    for (const record of message.records) {
+      switch (record.recordType) {
+        case "text":
+          const textDecoder = new TextDecoder(record.encoding);
+          setMessage(textDecoder.decode(record.data));
+          break;
+        case "url":
+          // TODO: Read URL record with record data.
+          break;
+        default:
+        // TODO: Handle other records with record data.
+      }
+    }
   };
 
   return (
     <>
+      <h2>Serial {serial}</h2>
+      <h2>Message: {message}</h2>
       <form onSubmit={handleSubmit}>
         <input
           type="text"
