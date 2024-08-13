@@ -79,12 +79,12 @@ function App() {
           await ndef.scan();
 
           ndef.onreading = (event) => {
-            // onReading(event);
+            onReading(event);
             setSerial(event.serialNumber);
-            const decoder = new TextDecoder();
-            for (const record of event.message.records) {
-              setMessage(decoder.decode(record.data));
-            }
+            // const decoder = new TextDecoder();
+            // for (const record of event.message.records) {
+            //   setMessage(decoder.decode(record.data));
+            // }
           };
 
           console.log("NFC reader initialized.");
@@ -107,19 +107,19 @@ function App() {
     const byteArr = encoder.encode(serialNumber);
     setRfid(byteArr);
     setSerial(byteArr);
-    for (const record of message.records) {
-      switch (record.recordType) {
-        case "text":
-          const textDecoder = new TextDecoder(record.encoding);
-          setMessage(textDecoder.decode(record.data));
-          break;
-        case "url":
-          // TODO: Read URL record with record data.
-          break;
-        default:
-        // TODO: Handle other records with record data.
-      }
-    }
+    // for (const record of message.records) {
+    //   switch (record.recordType) {
+    //     case "text":
+    //       const textDecoder = new TextDecoder(record.encoding);
+    //       setMessage(textDecoder.decode(record.data));
+    //       break;
+    //     case "url":
+    //       // TODO: Read URL record with record data.
+    //       break;
+    //     default:
+    //     // TODO: Handle other records with record data.
+    //   }
+    // }
   };
 
   return (
@@ -127,8 +127,8 @@ function App() {
       <h2>Serial {serial}</h2>
       <h2>Message: {message}</h2>
 
-      <h2>init {init}</h2>
-      <h2>err: {err}</h2>
+      {/* <h2>init {init}</h2>
+      <h2>err: {err}</h2> */}
       <form onSubmit={handleSubmit}>
         <input
           type="text"
