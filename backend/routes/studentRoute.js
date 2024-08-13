@@ -18,7 +18,7 @@ router.route("/add").post(async (req, res) => {
   }
 });
 
-router.route("/test").post(async (req, res) => {
+router.route("/test").get(async (req, res) => {
   try {
     console.log("Test");
     res.status(200).send({});
