@@ -37,6 +37,7 @@ function App() {
     setRfid("");
   };
 
+  // const handleSubmit = () => {};
   // const scan = useCallback(async () => {
   //   if ("NDEFReader" in window) {
   //     try {
@@ -69,16 +70,18 @@ function App() {
   useEffect(() => {
     const readNfc = async () => {
       try {
+        console.log("running");
         if ("NDEFReader" in window) {
           const ndef = new window.NDEFReader();
           await ndef.scan();
 
           ndef.onreading = (event) => {
-            onReading(event);
+            // onReading(event);
+            setSerial(event.serialNumber);
             const decoder = new TextDecoder();
-            // for (const record of event.message.records) {
-            //   setNfcMessage(decoder.decode(record.data));
-            // }
+            for (const record of event.message.records) {
+              setMessage(decoder.decode(record.data));
+            }
           };
 
           console.log("NFC reader initialized.");
