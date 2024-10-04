@@ -5,7 +5,7 @@ import "./App.css";
 import axios from "axios";
 
 function App() {
-  const url = "https://pos-vercel.onrender.com";
+  const url = "https://backend-test-1-khhz.onrender.com";
   // const url = "http://localhost:3001";
   const printReceipt = () => {
     const receiptData = `
