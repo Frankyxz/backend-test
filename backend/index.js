@@ -3,6 +3,7 @@ const mysql = require("mysql");
 const cors = require("cors");
 const bodyParser = require("body-parser");
 require("dotenv").config();
+const net = require("net");
 const app = express();
 
 const port = process.env.PORT;
@@ -20,6 +21,36 @@ app.use(
 );
 
 app.use(express.json());
+
+const printerIP = "192.168.10.172"; // Replace with your printer's IP
+const printerPort = 9100; // Port 9100 is commonly used for raw print data
+
+// Route to handle print requests
+app.post("/print", (req, res) => {
+  const { data } = req.body;
+
+  if (!data) {
+    return res.status(400).send({ error: "No data to print" });
+  }
+
+  // Create a TCP connection to the printer
+  const client = new net.Socket();
+  client.connect(printerPort, printerIP, () => {
+    console.log("Connected to printer");
+    client.write(data);
+    client.end();
+  });
+
+  client.on("error", (err) => {
+    console.error("Error connecting to printer:", err);
+    return res.status(500).send({ error: "Error connecting to printer" });
+  });
+
+  client.on("close", () => {
+    console.log("Connection to printer closed");
+    res.send({ status: "success", message: "Printed successfully" });
+  });
+});
 
 const studentRoutes = require("./routes/studentRoute");
 

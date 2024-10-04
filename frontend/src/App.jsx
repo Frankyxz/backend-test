@@ -5,147 +5,43 @@ import "./App.css";
 import axios from "axios";
 
 function App() {
-  const [name, setName] = useState("");
-  const [rfid, setRfid] = useState([]);
+  const url = "https://pos-vercel.onrender.com";
+  // const url = "http://localhost:3001";
+  const printReceipt = () => {
+    const receiptData = `
+          \x1b\x40
+          \x1b\x61\x01
+          \x0a\x0a\x0a
+          ELI IT Solutions POS
+          Paso De Blas Valenzuela
+          City, 1440 Philippines
+          \x0a\x0a\x0a
+          \x1b\x61\x00
+          Item                          Price
+          -----------------------------------
+          Product 1                     2.99
+          Product 2                     1.49
+          Product 3 (12 pack)           3.79
+          Product 4 (1L)                1.29
+          \x0a\x0a\x0a
+          Total:                        9.56
+          Thank you for shopping with us!
+          \x0a\x0a\x0a
+          \x1b\x64\x02
+          \x1d\x56\x01 / Full Cut
+        `;
 
-  const [stud, setStud] = useState([]);
-
-  const [serial, setSerial] = useState("");
-  const [message, setMessage] = useState("");
-
-  const [init, setInit] = useState("");
-  const [err, seteRR] = useState("");
-
-  const [logs, setLogs] = useState([]);
-
-  // const BASE = "http://localhost:8083";
-  const BASE = "https://backend-test-rbm7.onrender.com";
-
-  const handleFetch = async () => {
-    const res = await axios.get(`${BASE}/stud/get`);
-    setStud(res.data);
-  };
-
-  useEffect(() => {
-    handleFetch();
-  }, []);
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    const formatRFID = rfid.join("");
-    const res = await axios.post(`${BASE}/stud/add`, {
-      name,
-      rfid: formatRFID,
-    });
-    handleFetch();
-    setName("");
-    setRfid([]);
-  };
-
-  // const handleSubmit = () => {};
-  // const scan = useCallback(async () => {
-  //   if ("NDEFReader" in window) {
-  //     try {
-  //       const ndef = new window.NDEFReader();
-  //       await ndef.scan();
-
-  //       console.log("Scan started successfully.");
-  //       ndef.onreadingerror = () => {
-  //         console.log("Cannot read data from the NFC tag. Try another one?");
-  //       };
-
-  //       ndef.onreading = (event) => {
-  //         console.log("NDEF message read.");
-  //         onReading(event);
-  //         setActions({
-  //           scan: "scanned",
-  //           write: null,
-  //         });
-  //       };
-  //     } catch (error) {
-  //       console.log(`Error! Scan failed to start: ${error}.`);
-  //     }
-  //   }
-  // }, []);
-
-  // useEffect(() => {
-  //   scan();
-  // }, []);
-
-  const log = (message) => {
-    setLogs((prevLogs) => [...prevLogs, message]);
-  };
-
-  const handleScan = async () => {
-    log("User clicked scan button");
-
-    try {
-      const ndef = new NDEFReader();
-      await ndef.scan();
-      log("> Scan started");
-
-      ndef.addEventListener("readingerror", () => {
-        log("Argh! Cannot read data from the NFC tag. Try another one?");
+    axios
+      .post(`${url}/print`, { data: receiptData })
+      .then((response) => {
+        console.log("Printed Successfully:", response.data);
+      })
+      .catch((error) => {
+        console.error("Error printing:", error);
       });
-
-      ndef.addEventListener("reading", ({ message, serialNumber }) => {
-        log(`> Serial Number: ${serialNumber}`);
-        log(`> Records: (${message.records.length})`);
-
-        setSerial(serialNumber);
-        const encoder = new TextEncoder();
-        const byteArr = encoder.encode(serialNumber);
-        setRfid(byteArr);
-      });
-    } catch (error) {
-      log("Argh! " + error);
-      console.log(error);
-    }
   };
 
-  useEffect(() => {
-    // const scanButton = document.getElementById("scanButton");
-    handleScan();
-  }, []);
-  return (
-    <>
-      <div>
-        <h3>Logs</h3>
-        <ul>
-          {logs.map((log, index) => (
-            <li key={index}>{log}</li>
-          ))}
-        </ul>
-      </div>
-      {/* <button onClick={handleScan}>Start NFC Scan</button> */}
-      <h2>Serial {serial}</h2>
-      <h2>Message: {message}</h2>
-
-      {/* <h2>init {init}</h2>
-      <h2>err: {err}</h2> */}
-      <form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-        />
-        <input
-          type="text"
-          value={rfid.join("")}
-          // onChange={(e) => setRfid(e.target.value)}
-        />
-
-        <button type="submit">Add</button>
-      </form>
-
-      {stud.map((s) => (
-        <>
-          <h1>Name: {s.name}</h1>
-          <h1>RFID: {s.rfid}</h1>
-        </>
-      ))}
-    </>
-  );
+  return <button onClick={printReceipt}>Print Receipt</button>;
 }
 
 export default App;
