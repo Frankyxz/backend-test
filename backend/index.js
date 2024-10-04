@@ -9,15 +9,15 @@ const app = express();
 const port = process.env.PORT;
 
 // Add your frontend's origin URL here
-const corsOptions = {
-  origin: "https://backend-test-jlq4.vercel.app", // Allow this origin only
-  methods: "GET,HEAD,PUT,PATCH,POST,DELETE", // Allowed HTTP methods
-  credentials: true, // Allow cookies and authentication
-};
+// const corsOptions = {
+//   origin: "https://backend-test-jlq4.vercel.app", // Allow this origin only
+//   methods: "GET,HEAD,PUT,PATCH,POST,DELETE", // Allowed HTTP methods
+//   credentials: true, // Allow cookies and authentication
+// };
 
-app.use(cors(corsOptions));
+// app.use(cors(corsOptions));
 
-// app.use(cors());
+app.use(cors());
 
 app.use(express.json({ limit: "500mb" })); // Add this line to parse incoming JSON data
 
@@ -29,7 +29,7 @@ app.use(express.json({ limit: "500mb" })); // Add this line to parse incoming JS
 //   })
 // );
 
-app.use(express.json());
+// app.use(express.json());
 
 const printerIP = "192.168.10.172"; // Replace with your printer's IP
 const printerPort = 9100; // Port 9100 is commonly used for raw print data
@@ -63,6 +63,8 @@ app.post("/print", (req, res) => {
 
 app.post("/test", (req, res) => {
   console.log("TEEEEEEEEEST");
+
+  res.send({ message: "Test" });
 });
 
 const studentRoutes = require("./routes/studentRoute");
