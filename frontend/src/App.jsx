@@ -41,7 +41,23 @@ function App() {
       });
   };
 
-  return <button onClick={printReceipt}>Print Receipt</button>;
+  const handleTest = () => {
+    axios
+      .post(`${url}/test`)
+      .then((response) => {
+        console.log("Printed Successfully:", response.data);
+      })
+      .catch((error) => {
+        console.error("Error printing:", error);
+      });
+  };
+
+  return (
+    <>
+      <button onClick={printReceipt}>Print Receipt</button>
+      <button onClick={handleTest}>TEST</button>
+    </>
+  );
 }
 
 export default App;

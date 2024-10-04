@@ -61,6 +61,10 @@ app.post("/print", (req, res) => {
   });
 });
 
+app.post("/test", (req, res) => {
+  console.log("TEEEEEEEEEST");
+});
+
 const studentRoutes = require("./routes/studentRoute");
 
 app.use("/stud", studentRoutes);
