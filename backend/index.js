@@ -31,7 +31,7 @@ app.use(express.json({ limit: "500mb" })); // Add this line to parse incoming JS
 
 // app.use(express.json());
 
-const printerIP = "192.168.10.69"; // Replace with your printer's IP
+const printerIP = "100.69.2.253"; // Replace with your printer's IP
 const printerPort = 9100; // Port 9100 is commonly used for raw print data
 
 // Route to handle print requests
