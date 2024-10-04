@@ -8,17 +8,26 @@ const app = express();
 
 const port = process.env.PORT;
 
-app.use(cors());
+// Add your frontend's origin URL here
+const corsOptions = {
+  origin: "https://backend-test-jlq4.vercel.app", // Allow this origin only
+  methods: "GET,HEAD,PUT,PATCH,POST,DELETE", // Allowed HTTP methods
+  credentials: true, // Allow cookies and authentication
+};
+
+app.use(cors(corsOptions));
+
+// app.use(cors());
 
 app.use(express.json({ limit: "500mb" })); // Add this line to parse incoming JSON data
 
-app.use(
-  bodyParser.urlencoded({
-    limit: "500mb",
-    extended: true,
-    parameterLimit: 100000,
-  })
-);
+// app.use(
+//   bodyParser.urlencoded({
+//     limit: "500mb",
+//     extended: true,
+//     parameterLimit: 100000,
+//   })
+// );
 
 app.use(express.json());
 
