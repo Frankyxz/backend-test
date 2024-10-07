@@ -102,11 +102,11 @@ function App() {
 
   return (
     <>
-      {/* <button onClick={printReceipt}>Print Receipt</button>
+      <button onClick={printReceipt}>Print Receipt</button>
       <button onClick={handleTest}>TEST</button>
       <button onClick={handleTestNGROK}>TEST NGROK</button>
-      <button onClick={printReceiptNGROK}>REQUEST TO LOCAL</button> */}
-      <SocketSample />
+      <button onClick={printReceiptNGROK}>REQUEST TO LOCAL</button>
+      {/* <SocketSample /> */}
     </>
   );
 }
