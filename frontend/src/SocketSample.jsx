@@ -4,7 +4,7 @@ const SocketSample = () => {
 
   useEffect(() => {
     // Establish WebSocket connection to local WebSocket server
-    const ws = new WebSocket("ws://192.168.10.233:8080");
+    const ws = new WebSocket("wss://192.168.10.233:8080");
     setSocket(ws);
 
     ws.onopen = () => {
