@@ -55,7 +55,7 @@ function App() {
 
   const handleTestNGROK = () => {
     axios
-      .post(`https://09d0-112-200-35-24.ngrok-free.app/test`)
+      .post(`https://ee72-112-200-35-24.ngrok-free.app/test`)
       .then((response) => {
         console.log("Printed Successfully:", response.data);
       })
@@ -89,7 +89,7 @@ function App() {
         `;
 
     axios
-      .post(`https://09d0-112-200-35-24.ngrok-free.app/print`, {
+      .post(`https://ee72-112-200-35-24.ngrok-free.app/print`, {
         data: receiptData,
       })
       .then((response) => {
