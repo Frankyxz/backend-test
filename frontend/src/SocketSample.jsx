@@ -1,4 +1,3 @@
-import React from "react";
 import React, { useEffect, useState } from "react";
 const SocketSample = () => {
   const [socket, setSocket] = useState(null);
