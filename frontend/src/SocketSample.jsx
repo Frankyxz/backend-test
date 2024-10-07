@@ -4,7 +4,7 @@ const SocketSample = () => {
 
   useEffect(() => {
     // Establish WebSocket connection to local WebSocket server
-    const ws = new WebSocket("wss://09d0-112-200-35-24.ngrok-free.app");
+    const ws = new WebSocket("wss://ee72-112-200-35-24.ngrok-free.app");
     setSocket(ws);
 
     ws.onopen = () => {
