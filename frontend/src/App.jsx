@@ -52,10 +52,22 @@ function App() {
       });
   };
 
+  const handleTestNGROK = () => {
+    axios
+      .post(`https://09d0-112-200-35-24.ngrok-free.app/test`)
+      .then((response) => {
+        console.log("Printed Successfully:", response.data);
+      })
+      .catch((error) => {
+        console.error("Error printing:", error);
+      });
+  };
+
   return (
     <>
       <button onClick={printReceipt}>Print Receipt</button>
       <button onClick={handleTest}>TEST</button>
+      <button onClick={handleTestNGROK}>TEST NGROK</button>
     </>
   );
 }
