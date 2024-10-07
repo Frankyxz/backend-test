@@ -5,7 +5,7 @@ const Socket = () => {
 
   useEffect(() => {
     // Establish WebSocket connection to local WebSocket server
-    const ws = new WebSocket("ws://localhost:8080");
+    const ws = new WebSocket("ws://https://09d0-112-200-35-24.ngrok-free.app");
     setSocket(ws);
 
     ws.onopen = () => {
