@@ -3,7 +3,7 @@ import reactLogo from "./assets/react.svg";
 import viteLogo from "/vite.svg";
 import "./App.css";
 import axios from "axios";
-import Socket from "./Socket";
+import SocketSample from "./SocketSample";
 
 function App() {
   const url = "https://backend-test-1-khhz.onrender.com";
@@ -102,11 +102,11 @@ function App() {
 
   return (
     <>
-      {/* <button onClick={printReceipt}>Print Receipt</button>
+      <button onClick={printReceipt}>Print Receipt</button>
       <button onClick={handleTest}>TEST</button>
       <button onClick={handleTestNGROK}>TEST NGROK</button>
-      <button onClick={printReceiptNGROK}>REQUEST TO LOCAL</button> */}
-      <Socket />
+      <button onClick={printReceiptNGROK}>REQUEST TO LOCAL</button>
+      {/* <SocketSample /> */}
     </>
   );
 }

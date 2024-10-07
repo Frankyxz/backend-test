@@ -1,6 +1,6 @@
 import React from "react";
 import React, { useEffect, useState } from "react";
-const Socket = () => {
+const SocketSample = () => {
   const [socket, setSocket] = useState(null);
 
   useEffect(() => {
@@ -54,4 +54,4 @@ const Socket = () => {
   );
 };
 
-export default Socket;
+export default SocketSample;
