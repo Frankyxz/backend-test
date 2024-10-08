@@ -89,7 +89,7 @@ function App() {
         `;
 
     axios
-      .post(`https://ee72-112-200-35-24.ngrok-free.app/print`, {
+      .post(`https://ac19-112-200-35-24.ngrok-free.app/print`, {
         data: receiptData,
       })
       .then((response) => {
