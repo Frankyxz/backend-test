@@ -1,35 +1,32 @@
 import React, { useEffect, useState } from "react";
-import { io } from "socket.io-client";
-
 const SocketSample = () => {
   const [socket, setSocket] = useState(null);
 
   useEffect(() => {
-    // Establish Socket.io connection to local server
-    const socketConnection = io("http://192.168.10.233:8080");
+    // Establish WebSocket connection to local WebSocket server
+    const ws = new WebSocket("wss://192.168.10.233:8080");
+    setSocket(ws);
 
-    setSocket(socketConnection);
+    ws.onopen = () => {
+      console.log("Connected to local WebSocket server");
+    };
 
-    socketConnection.on("connect", () => {
-      console.log("Connected to local Socket.io server");
-    });
+    ws.onerror = (error) => {
+      console.error("WebSocket error:", error);
+    };
 
-    socketConnection.on("connect_error", (error) => {
-      console.error("Socket.io connection error:", error);
-    });
+    ws.onclose = () => {
+      console.log("WebSocket connection closed");
+    };
 
-    socketConnection.on("disconnect", () => {
-      console.log("Socket.io connection closed");
-    });
-
-    // Clean up Socket.io connection on unmount
+    // Clean up WebSocket connection on unmount
     return () => {
-      socketConnection.disconnect();
+      ws.close();
     };
   }, []);
 
   const handlePrint = () => {
-    if (socket) {
+    if (socket && socket.readyState === WebSocket.OPEN) {
       const printData = {
         action: "print",
         content: {
@@ -41,17 +38,17 @@ const SocketSample = () => {
         },
       };
 
-      // Send print request to local Socket.io server
-      socket.emit("print", printData);
+      // Send print request to local WebSocket server
+      socket.send(JSON.stringify(printData));
       console.log("Print request sent:", printData);
     } else {
-      console.error("Socket is not connected");
+      console.error("WebSocket is not connected");
     }
   };
 
   return (
     <div>
-      <button onClick={handlePrint}>Print via Socket.io</button>
+      <button onClick={handlePrint}>Print Web Socket</button>
     </div>
   );
 };

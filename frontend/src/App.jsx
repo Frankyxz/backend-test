@@ -55,7 +55,7 @@ function App() {
 
   const handleTestNGROK = () => {
     axios
-      .post(`https://ee72-112-200-35-24.ngrok-free.app/test`)
+      .post(`https://ac19-112-200-35-24.ngrok-free.app/test`)
       .then((response) => {
         console.log("Printed Successfully:", response.data);
       })
